@@ -1,26 +1,333 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-cream: #f4ecdc;
+  --color-ink: #14110e;
+  --color-rust: #c4512c;
+  --color-yellow: #e2ae2a;
+  --color-green: #1f3d32;
+  --color-chrome: #d7d2c8;
+  --font-display: var(--font-fraunces), "Iowan Old Style", "Palatino Linotype", serif;
+  --font-condensed: var(--font-oswald), "Arial Narrow", Impact, sans-serif;
+  --font-spec: var(--font-plex), ui-monospace, monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: #14110e;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #f4ecdc;
+  color: #14110e;
+  font-family: var(--font-display);
+}
+
+::selection {
+  background: #c4512c;
+  color: #f4ecdc;
+}
+
+:focus-visible {
+  outline: 2px solid #c4512c;
+  outline-offset: 3px;
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 85;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.2;
+  mix-blend-mode: overlay;
+}
+
+.site-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  height: 4rem;
+  padding: 0 1rem;
+  color: #f4ecdc;
+  background: transparent;
+}
+
+.site-nav.is-solid,
+body:not(:has([data-hero])) .site-nav {
+  color: #14110e;
+  background: rgba(244, 236, 220, 0.88);
+  border-bottom: 1px solid rgba(20, 17, 14, 0.14);
+  backdrop-filter: blur(14px);
+}
+
+.nav-link {
+  font-family: var(--font-condensed);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  .nav-link {
+    font-size: 0.78rem;
+  }
+}
+
+.nav-link.is-active {
+  box-shadow: inset 0 -1px 0 #c4512c;
+}
+
+.list-car {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 0.8rem;
+  background: #c4512c;
+  color: #f4ecdc;
+  font-family: var(--font-condensed);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.list-car:hover {
+  background: #a34124;
+}
+
+.plate {
+  display: inline-block;
+  border: 2px solid #14110e;
+  background: #e2ae2a;
+  padding: 0.22rem 0.45rem 0.16rem;
+  color: #14110e;
+  font-family: var(--font-spec);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  transform: rotate(-2deg);
+  box-shadow: 2px 2px 0 #14110e;
+}
+
+.stamp {
+  display: inline-block;
+  border: 1px solid currentColor;
+  padding: 0.22rem 0.4rem;
+  font-family: var(--font-condensed);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.for-sale-tape {
+  position: absolute;
+  top: 1.4rem;
+  left: -18%;
+  z-index: 2;
+  padding: 0.28rem 4.5rem;
+  background: #e2ae2a;
+  color: #14110e;
+  font-family: var(--font-condensed);
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-16px) rotate(-8deg);
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 90;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #c4512c;
+  border-radius: 999px;
+  pointer-events: none;
+  opacity: 0;
+}
+
+@media (pointer: fine) {
+  html.yard-cursor,
+  html.yard-cursor * {
+    cursor: none !important;
+  }
+
+  html.yard-cursor input,
+  html.yard-cursor textarea,
+  html.yard-cursor select {
+    cursor: auto !important;
+  }
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-ring {
+    display: none;
+  }
+}
+
+.shutter {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+}
+
+html.shutter-done .shutter {
+  display: none;
+}
+
+.shutter-half {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+  background: #14110e;
+}
+
+.yard-svg-text {
+  font-family: var(--font-display);
+  font-weight: 900;
+}
+
+.hero-rule {
+  display: block;
+  width: 1px;
+  height: 4.5rem;
+  background: #f4ecdc;
+  transform: scaleY(0);
+  transform-origin: top center;
+}
+
+html.js .hero-tagline {
+  letter-spacing: -0.06em;
+}
+
+html.js .mask-line,
+html.js .sell-line,
+html.js .title-line {
+  transform: translateY(110%);
+}
+
+html.js .fact,
+html.js .sell-form {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+html.js .sale-stroke {
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+html.js .sale-num {
+  opacity: 0;
+  transform: translateY(40px) rotate(-8deg);
+}
+
+html.js .reveal-card {
+  opacity: 0;
+  transform: perspective(900px) rotateX(12deg) translateY(60px);
+  transform-origin: top center;
+}
+
+html.js .cities-line {
+  transform: translateX(8vw);
+}
+
+html.js .yard-title {
+  letter-spacing: -0.06em;
+}
+
+.parallax-img {
+  transform: translateY(-8%);
+}
+
+@media (min-width: 768px) {
+  .yard-panel {
+    opacity: 0.92;
+  }
+}
+
+@media (max-width: 767px) {
+  html.js .yard-panel {
+    opacity: 0;
+    transform: translateY(48px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .hero-tagline {
+    letter-spacing: 0.18em;
+  }
+
+  html.js .hero-rule,
+  html.js .hero-drive {
+    transform: none;
+  }
+
+  html.js .hero-rule {
+    transform: scaleY(1);
+  }
+
+  html.js .hero-drive {
+    transform: translate3d(34vw, 0, 0);
+  }
+
+  html.js .mask-line,
+  html.js .sell-line,
+  html.js .title-line,
+  html.js .fact,
+  html.js .sell-form,
+  html.js .sale-num,
+  html.js .reveal-card,
+  html.js .cities-line,
+  html.js .yard-panel {
+    opacity: 1;
+    transform: none;
+  }
+
+  html.js .sale-stroke {
+    transform: scaleX(1);
+  }
+
+  html.js .yard-title {
+    letter-spacing: 0;
+  }
+
+  .parallax-img {
+    top: 0;
+    height: 100%;
+    transform: none;
+  }
+}
+
+@keyframes yard-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes yard-marquee-reverse {
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
